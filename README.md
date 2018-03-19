@@ -1,6 +1,6 @@
 # wy-vue
 
-> A Vue.js project
+>vue
 
 ## Build Setup
 
