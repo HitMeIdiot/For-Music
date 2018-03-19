@@ -146,6 +146,7 @@ export default {
     playSong (i, index) {
       console.log(i)
       this.$store.state.album = i.album.name
+      this.$store.state.duration = i.duration
       this.$store.state.albumId = i.album.id
       this.playMusic(i.id, i.name, i.album.blurPicUrl, i.album.artists)
     },
@@ -246,7 +247,7 @@ export default {
           color: #999999;
           border-right: 1px solid #999;
           padding-left: 10px;
-          padding-right: 10px;
+          padding-right: 20px;
           p {
             font-weight: bold;
             text-align: right;

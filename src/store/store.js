@@ -17,6 +17,7 @@ export default new vuex.Store({
     songSheetName: '',
     // 歌词
     lyric: '',
+    duration: 0,
     // 歌单标签
     songTag: '全部歌单',
     // 精彩评论

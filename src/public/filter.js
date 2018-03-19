@@ -7,11 +7,8 @@ export function numFormat (val) {
   }
 }
 export function timeFormat (val) {
-  val = (val / 1000 / 60).toFixed(2)
-  let arr = []
-  arr = val.toString().split('.')
-  let min = arr[0]
-  let sec = parseInt(arr[1] * 60 / 100)
+  let sec = parseInt((val / 1000 % 60))
+  let min = parseInt(val / 1000 / 60)
   min = (min < 10 ? '0' + min : min)
   sec = (sec < 10 ? '0' + sec : sec)
   return min + ':' + sec
