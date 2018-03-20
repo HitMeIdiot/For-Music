@@ -17,7 +17,7 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-# ????
+# 效果预览
 
 ![forheyin](http://ox36g1rgh.bkt.clouddn.com/2.jpg)
 ![forheyin](http://ox36g1rgh.bkt.clouddn.com/3.jpg)
