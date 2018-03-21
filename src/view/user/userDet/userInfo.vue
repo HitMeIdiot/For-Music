@@ -2,7 +2,14 @@
     <div class="user_index">
       <div>
         <div class="u_up">
-          <img :src="profile.avatarUrl" alt="">
+          <div  class="ava">
+            <img :src="profile.avatarUrl" alt="">
+            <i v-if="profile.artistId" @click="goSingerInfo(profile.artistId)">
+              <span class="iconfont icon-person"></span>
+              Ta的歌手主页
+              <span class="iconfont icon-arrowright"></span>
+            </i>
+          </div>
           <div class="upRg">
             <tit :title="profile.nickname">
               <div slot="more">
@@ -124,6 +131,9 @@ export default {
     this.getUserRecord(this.userId)
   },
   methods: {
+    goSingerInfo (id) {
+      this.$router.push({path: '/singerInfo', query: {descId: id}})
+    },
     go (index) {
       if (index === 0) {
         this.$router.push({path: '/userIndex/dynamic', query: {userId: this.userId}})
@@ -179,11 +189,36 @@ export default {
     .u_up {
       display: flex;
       padding: 15px 30px 30px 30px;
-      img {
+      .ava {
         width: 200px;
         height: 200px;
         margin-right: 30px;
         flex-shrink: 0;
+        position: relative;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+        i {
+          position: absolute;
+          left: 20%;
+          top: 160px;
+          color: #fff;
+          width: 60%;
+          text-align: center;
+          background: #777878;
+          font-size: 12px;
+          height: 20px;
+          line-height: 20px;
+          border-radius: 15px;
+          cursor: pointer;
+          span {
+            font-size: 12px;
+          }
+          &:hover {
+            background: #545555;
+          }
+        }
       }
       .upRg {
         flex: 1;

@@ -48,6 +48,9 @@ export default {
   methods: {
     // 双击播放歌曲
     playSong (i, index) {
+      this.$store.state.album = i.album.name
+      this.$store.state.duration = i.duration
+      this.$store.state.albumId = i.album.id
       this.playMusic(i.id, i.name, i.album.blurPicUrl, i.album.artists)
     }
   }

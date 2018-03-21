@@ -74,6 +74,9 @@ export const djProgram = params => {
 export const djProgramDetail = params => {
   return axios.get(`api/dj/program/detail`, params).then(res => res)
 }
+export const djRecommendType = params => {
+  return axios.get(`api/dj/recommend/type`, params).then(res => res)
+}
 
 export const djSub = params => {
   return axios.get(`api/dj/sub`, params).then(res => res)
@@ -87,7 +90,7 @@ export const djHot = params => {
   return axios.get(`api/dj/hot`, params).then(res => res)
 }
 
-// 精选电台
+// 电台 - 推荐
 export const djRecommend = params => {
   return axios.get(`api/dj/recommend`, params).then(res => res)
 }

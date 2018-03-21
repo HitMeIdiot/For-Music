@@ -26,6 +26,7 @@ import listenRec from '@/view/user/userDet/listenRec'
 
 import singerInfo from '@/view/else/singerInfo'
 import albumDet from '@/view/else/albumDet'
+import djDet from '@/view/else/djDet'
 
 import privateFM from '@/view/Recommend/privateFM'
 import mv from '@/view/Recommend/mv'
@@ -131,6 +132,11 @@ export default new Router({
               path: '/songDet',
               name: 'songDet',
               component: songDet
+            },
+            {
+              path: '/djDet',
+              name: 'djDet',
+              component: djDet
             },
             {
               path: '/dailyRec',

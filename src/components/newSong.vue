@@ -57,6 +57,9 @@ export default {
       })
     },
     go (i) {
+      this.$store.state.album = i.song.album.name
+      this.$store.state.duration = i.song.duration
+      this.$store.state.albumId = i.song.album.id
       this.playMusic(i.id, i.song.name, i.song.album.blurPicUrl, i.song.artists)
     }
   }

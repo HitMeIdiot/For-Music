@@ -9,7 +9,7 @@
         我是搜索框
       </div>
       <div class="h3">
-        <img :src="myId?'http://ox36g1rgh.bkt.clouddn.com/ava.jpg':''" alt="">
+        <img :src="myId?'http://ox36g1rgh.bkt.clouddn.com/ava.jpg':''" alt="" @click="goUser()">
         <span @click="log">
           <em>{{myName?myName:'未登录'}}</em><i class="iconfont icon-xiala"></i>
         </span>
@@ -55,6 +55,9 @@ export default {
   methods: {
     log () {
       this.$refs.log.showLog()
+    },
+    goUser () {
+      this.$router.push({path: '/userIndex/userInfo', query: {userId: this.myId}})
     }
   }
 }

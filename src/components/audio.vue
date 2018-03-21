@@ -135,6 +135,7 @@ export default {
         width: 100%;
         display: flex;
         align-items: center;
+        margin: 0 10px;
         i {
           width: 445px;
           flex-shrink: 0;

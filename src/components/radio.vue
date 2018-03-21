@@ -1,6 +1,6 @@
 <template>
     <div class="radio">
-      <ul>
+      <ul v-if="types==='1'" class="one">
         <li v-for="(i,index) in radioList" :key="index"  @click="play(i)">
           <h3>
             <img :src="i.picUrl" alt="">
@@ -14,66 +14,50 @@
           </div>
         </li>
       </ul>
+      <ul v-if="types==='2'" class="two">
+        <li v-for="(i,index) in radioList" :key="index"  @click="goDet(i.id)" v-if="index<5">
+          <img :src="i.picUrl" alt="">
+          <h3>{{i.name}}</h3>
+          <span>{{i.rcmdtext}}</span>
+        </li>
+      </ul>
     </div>
 </template>
 <script>
-import { personalizedDjProgram, musicUrl } from '@/api/api'
 export default {
   data () {
     return {
-      radioList: []
     }
   },
   components: {
-    isAll: {
-      type: Boolean,
-      default: false
+  },
+  props: {
+    radioList: {
+      type: Array
+    },
+    types: {
+      type: String
     }
   },
   created () {
-    this.getRadioList()
   },
   methods: {
-    getRadioList () {
-      personalizedDjProgram().then((res) => {
-        console.log('主播电台', res)
-        if (res.code === 200) {
-          if (this.isAll) {
-            this.radioList = res.result
-          } else {
-            res.result.forEach((item, index) => {
-              if (index < 6) {
-                this.radioList.push(res.result[index])
-              }
-            })
-          }
-        }
-      })
-    },
     play (i) {
       console.log(i)
-      this.$store.state.songImg = i.picUrl
-      this.$store.state.songName = i.name
-      // this.$store.state.songSinger = i.copywriter
-      musicUrl({params: {id: i.id}}).then((res) => {
-        console.log('歌曲url', res)
-        if (res.code === 200) {
-          if (res.data[0].url) {
-            this.$store.state.playSongId = i.id
-            this.$store.state.mp3Url = res.data[0].url
-          } else {
-            this.$toast('暂无资源')
-          }
-          console.log(this.$store.state.mp3Url)
-        }
-      })
+      this.$store.state.album = i.program.mainSong.album.name
+      this.$store.state.duration = i.program.duration
+      this.$store.state.albumId = i.program.mainSong.album.id
+      this.playMusic(i.program.mainTrackId, i.name, i.picUrl, i.program.mainSong.artists)
+    },
+    goDet (id) {
+      this.$router.push({path: '/djDet', query: {rid: id}})
     }
   }
 }
 </script>
 <style scoped lang="scss">
   .radio {
-    ul {
+    ul.one {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -143,6 +127,27 @@ export default {
       }
       li:nth-child(5),li:nth-child(6) {
         border-bottom: 0;
+      }
+    }
+    ul.two {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      li {
+        width: 18%;
+        height: 184px;
+        margin-right: 2.5%;
+        font-size: 12px;
+        img {
+          width: 100%;
+          cursor: pointer;
+        }
+        &:nth-of-type(5n) {
+          margin-right: 0;
+        }
+        span {
+          color: #888;
+        }
       }
     }
   }

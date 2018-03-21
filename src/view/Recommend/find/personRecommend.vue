@@ -20,11 +20,11 @@
     <tit title="主播电台">
       <router-link to="/find/anchorsRadio" slot="more">更多 <i class="iconfont icon-arrowright"></i></router-link>
     </tit>
-    <radio></radio>
+    <radio :radioList="radioList" types="1"></radio>
   </div>
 </template>
 <script>
-import { personalized, personalizedMv, recommendResource } from '@/api/api'
+import { personalized, personalizedMv, recommendResource, personalizedDjProgram } from '@/api/api'
 import banner from '@/components/banner'
 import tit from '@/components/title'
 import songs from '@/components/songs'
@@ -37,7 +37,8 @@ export default {
     return {
       personalizedList: [],
       mvList: [],
-      type: 1
+      type: 1,
+      radioList: []
     }
   },
   components: {
@@ -52,6 +53,7 @@ export default {
   created () {
     this.getPerList()
     this.getMvList()
+    this.getRadio()
   },
   methods: {
     // 获取推荐歌单
@@ -74,6 +76,12 @@ export default {
     getDaySong () {
       recommendResource().then((res) => {
         console.log('推荐歌单', res)
+      })
+    },
+    getRadio () {
+      personalizedDjProgram().then((res) => {
+        console.log('推荐电台', res)
+        this.radioList = res.result
       })
     },
     // 获取推荐MV
