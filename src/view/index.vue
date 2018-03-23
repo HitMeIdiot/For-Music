@@ -9,7 +9,7 @@
         我是搜索框
       </div>
       <div class="h3">
-        <img :src="myId?'http://ox36g1rgh.bkt.clouddn.com/ava.jpg':''" alt="" @click="goUser()">
+        <img :src="myId?'http://ox36g1rgh.bkt.clouddn.com/ava.jpg':''" alt="">
         <span @click="log">
           <em>{{myName?myName:'未登录'}}</em><i class="iconfont icon-xiala"></i>
         </span>
@@ -24,7 +24,7 @@
 </template>
 <script>
 import login from '@/components/login'
-import audioPlay from '@/components/audio'
+import audioPlay from '@/components/audio1'
 import over from '@/components/over'
 import Bus from '@/components/bus'
 export default {
@@ -55,9 +55,6 @@ export default {
   methods: {
     log () {
       this.$refs.log.showLog()
-    },
-    goUser () {
-      this.$router.push({path: '/userIndex/userInfo', query: {userId: this.myId}})
     }
   }
 }

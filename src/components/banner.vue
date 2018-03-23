@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <ul>
-      <li v-for="(i,index) in bannerList" :key="index" v-show="index===actIndex">
+  <div class="main">
+    <ul id="ban">
+      <li v-for="(i,index) in bannerList" :key="index">
         <img :src="i.pic" alt="">
       </li>
     </ul>
@@ -15,14 +15,18 @@ export default {
   data () {
     return {
       bannerList: [],
-      actIndex: 0
+      actIndex: 0,
+      count: 0,
+      direction: true
     }
   },
   created () {
     this.getBanner()
+  },
+  mounted () {
     setInterval(() => {
       this.autoPlay()
-    }, 30000)
+    }, 3000)
   },
   methods: {
     getBanner () {
@@ -33,24 +37,44 @@ export default {
       })
     },
     autoPlay () {
-      this.actIndex++
-      if (this.actIndex >= this.bannerList.length) {
-        this.actIndex = 0
+      let ban = document.getElementById('ban')
+      if (this.direction) {
+        this.count++
+        ban.style.transform = 'translate(' + (-760 * this.count) + 'px)'
+        if (this.count > this.bannerList.length - 1) {
+          this.count = this.bannerList.length - 1
+          ban.style.transform = 'translate(0)'
+          this.direction = false
+          this.count = 0
+        }
+      } else {
+        this.count++
+        ban.style.transform = 'translate(' + (-760 * this.count) + 'px)'
+        if (this.count >= this.bannerList.length - 1) {
+          this.direction = true
+          this.count = -1
+        }
       }
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-  ul {
-    height: 190px;
+  .main {
+    width: 760px;
     overflow: hidden;
-    margin-bottom: 15px;
-    li {
+    ul {
+      height: 190px;
+      margin-bottom: 15px;
+      transition: all 2s;
+      width: 4560px;
+      li {
         height: 100%;
-      img {
-        width: 760px;
-        height: 190px;
+        float: left;
+        img {
+          width: 760px;
+          height: 190px;
+        }
       }
     }
   }

@@ -13,8 +13,8 @@
         </ul>
       </div>
       <div class="m2">
-        <div v-show="actIndex===0">新歌速递</div>
-        <album v-show="actIndex===1" :list="newAlbumList"></album>
+        <div v-show="actIndex===1">新歌速递</div>
+        <album v-show="actIndex===0" :list="newAlbumList"></album>
       </div>
     </div>
 </template>
@@ -26,8 +26,8 @@ export default {
   data () {
     return {
       tabList: [
-        {name: '新歌速递'},
-        {name: '新碟上架'}
+        {name: '新碟上架'},
+        {name: '新歌速递'}
       ],
       tabClass: [
         {name: '全部'},

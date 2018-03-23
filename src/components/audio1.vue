@@ -8,11 +8,10 @@
       </div>
       <div class="pro">
         <span>{{currentTime | timeFormat}}</span>
-        <p id="pro" @mousemove="mousemove($event)" @mouseleave="mouseEnd($event)" >
-          <i  @click="jumpTime($event)"  >
-            <em :style="{width: steps + '%'}"></em>
-          </i>
-          <b :style="{left: step + '%'}" id="steps" @mousedown="mousedown($event)" @mouseup="mouseEnd($event)"></b>
+        <p id="pro" @click="jumpTime($event)"  >
+          <i></i>
+          <em id="ems"></em>
+          <b id="steps"></b>
         </p>
         <span>{{$store.state.duration | timeFormat}}</span>
       </div>
@@ -38,7 +37,6 @@ export default {
       mp3Url: '',
       isPlay: false,
       step: 0,
-      steps: 0,
       currentTime: 0,
       locked: false,
       isQuiet: false,
@@ -47,7 +45,10 @@ export default {
       vo: 100,
       vos: 100,
       volume: 0,
-      audio: ''
+      audio: '',
+      oDiv1: '',
+      oDiv2: '',
+      oDiv3: ''
     }
   },
   computed: {
@@ -58,7 +59,6 @@ export default {
   watch: {
     getPlayState (val) {
       this.step = 0
-      this.steps = 0
       this.mp3Url = val
       this.audio.load()
       this.isPlay = true
@@ -70,6 +70,15 @@ export default {
   },
   mounted () {
     this.audio = document.getElementById('playSong')
+    this.oDiv1 = document.querySelector('#pro')
+    this.oDiv2 = document.querySelector('#ems')
+    this.oDiv3 = document.querySelector('#steps')
+    this.oDiv3.addEventListener('mousedown', (ev) => {
+      document.addEventListener('mousemove', this.fnMove, false)
+      document.addEventListener('mouseup', this.fnEnd, false)
+      this.fnMove(ev)
+    }, false)
+    this.fnEnd()
   },
   methods: {
     updateLyric () {
@@ -78,14 +87,16 @@ export default {
         Bus.$emit('getTarget', t)
       }
       this.currentTime = this.audio.currentTime * 1000
-      if (this.step <= 100) {
-        this.step = this.currentTime / this.$store.state.duration * 100
-        this.steps = this.currentTime / this.$store.state.duration * 100
+      if (this.step <= 445) {
+        this.step = this.currentTime / this.$store.state.duration * 445
+        this.oDiv3.style.left = this.step + 'px'
+        this.oDiv2.style.width = this.step + 'px'
       }
-      if (this.step >= 100) {
+      if (this.step >= 445) {
         this.isPlay = false
         this.step = 0
-        this.steps = 0
+        this.oDiv3.style.left = 0
+        this.oDiv2.style.width = 0
         this.currentTime = 0
       }
     },
@@ -97,36 +108,32 @@ export default {
       this.audio.pause()
       this.isPlay = false
     },
-    mousedown (e) {
-      this.locked = true
-      this.lastStep = this.step
+    fnMove (e) {
+      this.same(e)
     },
-    mouseEnd (e) {
-      this.locked = false
-    },
-    mousemove (e) {
-      if (this.locked) {
-        this.same(e)
-      }
+    fnEnd () {
+      document.removeEventListener('mouseup', this.fnEnd, false)
+      document.removeEventListener('mousemove', this.fnMove, false)
     },
     jumpTime (e) {
       this.same(e)
     },
     same (e) {
-      let oDiv1 = document.querySelector('#pro')
-      let oDiv1W = oDiv1.offsetWidth
+      let oDiv1W = this.oDiv1.offsetWidth
       let x = e.clientX - 250
       if (x >= oDiv1W) {
         x = oDiv1W
       } else if (x <= 0) {
         x = 0
       }
+      this.oDiv3.style.left = x + 'px'
+      this.oDiv2.style.width = x + 'px'
       // 点击或移动时根据step计算time赋值给this.audio.currentTime
       this.step = x / 445 * 100
-      this.steps = x / 445 * 100
       this.time = this.step * this.$store.state.duration / 1000 / 100
       this.audio.currentTime = this.time
     },
+    // 调声音大小
     jumpVoice (e) {
       this.vo = e.offsetX - 7
       this.vos = e.offsetX
@@ -187,7 +194,7 @@ export default {
         width: 100%;
         display: flex;
         align-items: center;
-        margin: 0 10px;
+        margin: 0 20px 0 10px;
         position: relative;
         b {
           position: absolute;
@@ -218,15 +225,15 @@ export default {
           background: #C2C2C4;
           border-radius: 5px;
           position: relative;
-          em {
-            position: absolute;
-            width: 0;
-            height: 4px;
-            background: #c62f2f;
-            z-index: 86;
-            border-radius: 5px;
-            /*transition: width 0.3s;*/
-          }
+        }
+        em {
+          position: absolute;
+          width: 0;
+          height: 4px;
+          background: #c62f2f;
+          z-index: 86;
+          border-radius: 5px;
+          /*transition: width 0.3s;*/
         }
       }
       span {
