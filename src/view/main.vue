@@ -89,17 +89,17 @@ export default {
             {icon: 'icon-mv', name: 'MV', id: 3, path: '/mv'},
             {icon: 'icon-friend', name: '朋友', id: 4, path: '/friend'}
           ]
-        },
-        {
-          menuName: '我的音乐',
-          list: [
-            {icon: 'icon-yinlemusic214', name: '本地音乐', id: 5, path: '/localMusic'},
-            {icon: 'icon-download', name: '下载管理', id: 6, path: '/download'},
-            {icon: 'icon-yun', name: '我的音乐云盘', id: 7, path: '/cloudMusic'},
-            {icon: 'icon-diantai', name: '我的电台', id: 8, path: '/radioSet'},
-            {icon: 'icon-shoucang', name: '我的收藏', id: 9, path: '/myCollect'}
-          ]
         }
+        // {
+        // menuName: '我的音乐',
+        // list: [
+        // {icon: 'icon-yinlemusic214', name: '本地音乐', id: 5, path: '/localMusic'},
+        // {icon: 'icon-download', name: '下载管理', id: 6, path: '/download'},
+        // {icon: 'icon-yun', name: '我的音乐云盘', id: 7, path: '/cloudMusic'},
+        // {icon: 'icon-diantai', name: '我的电台', id: 8, path: '/radioSet'},
+        // {icon: 'icon-shoucang', name: '我的收藏', id: 9, path: '/myCollect'}
+        // ]
+        // }
       ],
       actIndex: 1,
       show: false,

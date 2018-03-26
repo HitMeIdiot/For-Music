@@ -18,6 +18,7 @@ export default new vuex.Store({
     // 歌词
     lyric: '',
     duration: 0,
+    timer: '',
     // 歌单标签
     songTag: '全部歌单',
     // 精彩评论
@@ -37,7 +38,8 @@ export default new vuex.Store({
     // 个人信息里的菜单切换
     upCss: 'icon-caidan1',
     downCss: 'icon-caidan1',
-    isCover: false
+    isCover: false,
+    userId: ''
   },
   mutations: {
     test () {

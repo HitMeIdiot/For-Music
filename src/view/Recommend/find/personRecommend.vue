@@ -55,6 +55,12 @@ export default {
     this.getMvList()
     this.getRadio()
   },
+  beforeRouteLeave (to, form, next) {
+    if (this.$store.state.timer) {
+      clearInterval(this.$store.state.timer)
+    }
+    next()
+  },
   methods: {
     // 获取推荐歌单
     getPerList () {

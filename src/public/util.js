@@ -23,6 +23,7 @@ export default{
     Vue.prototype.turnTime = function (time, type) {
       if (time) {
         time = new Date(time)
+        let now = new Date()
         let year = time.getFullYear()
         let mon = time.getMonth() + 1
         let day = time.getDate()
@@ -37,22 +38,22 @@ export default{
         } else {
           hou = (hou < 10 ? '0' + hou : hou)
           min = (min < 10 ? '0' + min : min)
-          if (year < new Date().getFullYear()) {
+          if (year < now.getFullYear()) {
             time = year + '年' + mon + '月' + day + '日' + ' ' + hou + ':' + min
           } else {
-            if (Math.abs(new Date().getDate() - day) >= 2) {
+            if (Math.abs(now.getDate() - day) >= 2) {
               time = mon + '月' + day + '日' + ' ' + hou + ':' + min
-            } else if (new Date().getDate() - day === 1) {
+            } else if (now.getDate() - day === 1) {
               time = '昨天' + ' ' + hou + ':' + min
-            } else if (new Date().getDate() - day === 0) {
-              if (new Date().getTime() - tamp < 3600000 && parseInt(min) !== 0) {
-                if (new Date().getHours() <= hou) {
-                  time = new Date().getMinutes() - parseInt(min) + '分钟前'
-                  if (new Date().getMinutes() - parseInt(min) === 0) {
+            } else if (now.getDate() - day === 0) {
+              if (now.getTime() - tamp < 3600000 && parseInt(min) !== 0) {
+                if (now.getHours() <= hou) {
+                  time = now.getMinutes() - parseInt(min) + '分钟前'
+                  if (now.getMinutes() - parseInt(min) === 0) {
                     time = '刚刚'
                   }
                 } else {
-                  time = 60 + new Date().getMinutes() - parseInt(min) + '分钟前'
+                  time = 60 + now.getMinutes() - parseInt(min) + '分钟前'
                 }
               } else {
                 time = hou + ':' + min
