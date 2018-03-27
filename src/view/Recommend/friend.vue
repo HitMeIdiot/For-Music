@@ -1,5 +1,5 @@
 <template>
-  <div class="main" ref="viewBox">
+  <div class="main">
     <dyn :eventList="eventList"></dyn>
     <div class="rf">
       <div class="r1">
@@ -51,10 +51,6 @@ export default {
     }
   },
   mounted () {
-    this.box = this.$refs.viewBox
-    this.box.addEventListener('scroll', () => {
-      console.log(' scroll ' + this.$refs.viewBox.scrollTop)
-    }, false)
   },
   methods: {
     getEvent () {

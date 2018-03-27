@@ -1,5 +1,5 @@
 <template>
-    <div class="lf">
+    <div class="lf" @mousewheel="moreDyn($event)" id="dyn">
       <tit title="动态"></tit>
       <div class="con" v-for="(i, index) in eventList" :key="index">
         <div class="m">
@@ -148,6 +148,13 @@ export default {
     },
     goUser (id) {
       this.$router.push({path: '/userIndex/userInfo', query: {userId: id}})
+    },
+    moreDyn (e) {
+      let dyn = document.getElementById('dyn')
+      console.log(dyn.scrollHeight)
+      console.log(dyn.clientHeight)
+      var oTop = document.body.scrollTop === 0 ? document.documentElement.scrollTop : document.body.scrollTop
+      console.log(oTop)
     }
   }
 }
@@ -210,6 +217,7 @@ export default {
           width: 40px;
           height: 40px;
           margin-right: 10px;
+          flex-shrink: 0;
         }
         p {
           color: #888;

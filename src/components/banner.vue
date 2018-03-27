@@ -1,5 +1,6 @@
 <template>
-  <div class="main"  @mouseleave="leaveUl" @mouseover="hoverUl">
+<div>
+  <div class="main" @mouseleave="leaveUl" @mouseover="hoverUl">
     <ul id="ban">
       <li v-for="(i,index) in bannerList" :key="index"
           :class="[count===index?'':'vis']">
@@ -8,14 +9,15 @@
     </ul>
     <b class="iconfont icon-arrowleft" @click="minus" v-show="isControl"></b>
     <b class="iconfont icon-arrowright" @click="add" v-show="isControl"></b>
-    <ul class="tab">
-      <li v-for="(i,index) in bannerList" :key="index"
-          @mouseleave="leaveLi(index)"
-          @mouseover="hoverLi(index)">
-        <span :class="[count===index?'active':'']">{{index}}</span>
-      </li>
-    </ul>
   </div>
+  <ul class="tab">
+    <li v-for="(i,index) in bannerList" :key="index"
+        @mouseleave="leaveLi(index)"
+        @mouseover="hoverLi(index)">
+      <span :class="[count===index?'active':'']">{{index}}</span>
+    </li>
+  </ul>
+</div>
 </template>
 
 <script>
@@ -59,14 +61,11 @@ export default {
         this.count = 0
       }
     },
-    hoverLi (i, e) {
+    hoverLi (i) {
       if (i < this.bannerList.length) {
         this.count = i
         this.ban.style.transform = 'translate(' + (-760 * this.count) + 'px)'
         clearInterval(this.$store.state.timer)
-        if (e) {
-          this.isControl = true
-        }
       }
     },
     leaveLi () {
@@ -142,28 +141,28 @@ export default {
       left: unset;
       right: 10px;
     }
-    ul.tab {
-      width: 171px;
-      margin: 0 auto;
-      display: flex;
-      font-size: 0;
-      li {
-        height: 10px;
-        &:not(:last-child) {
-          margin-right: 5px;
-        }
-        &:hover {
-          cursor: pointer;
-        }
-        span {
-          display: inline-block;
-          width: 17px;
-          height: 2px;
-          background: #C8C8C8;
-        }
-        span.active {
-          background: #c62f2f;
-        }
+  }
+  ul.tab {
+    width: 171px;
+    margin: 0 auto;
+    display: flex;
+    font-size: 0;
+    li {
+      height: 10px;
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+      span {
+        display: inline-block;
+        width: 17px;
+        height: 2px;
+        background: #C8C8C8;
+      }
+      span.active {
+        background: #c62f2f;
       }
     }
   }
