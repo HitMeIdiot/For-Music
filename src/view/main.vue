@@ -64,7 +64,9 @@
         </div>
       </div>
       <div class="rightCon">
-        <router-view></router-view>
+        <transition name="fade">
+          <router-view></router-view>
+        </transition>
       </div>
     </div>
     <!--<footer>-->
@@ -158,6 +160,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-active {
+    opacity: 0
+  }
   #main {
     footer {
       border-top: 1px solid #E1E1E2;

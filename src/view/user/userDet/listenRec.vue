@@ -11,7 +11,7 @@
         <ul>
           <li v-for="(i,index) in listenList" :key="index" @dblclick="play(i)">
             <p>
-              <span>{{index>10? '0'+index : index+1}}</span>
+              <span>{{index>8? index+1 : '0'+(index+1)}}</span>
               <span class="iconfont icon-love"></span>
               <span class="iconfont icon-download"></span>
             </p>

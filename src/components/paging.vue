@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div class="page" v-show="comLength>0">
       <span class="iconfont icon-arrowleft" @click="prePage"></span>
       <ul>
         <li v-for="(i, index) in groupList"

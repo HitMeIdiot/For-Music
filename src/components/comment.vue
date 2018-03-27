@@ -1,5 +1,5 @@
 <template>
-    <div class="com">
+    <div class="com" v-show="comInfo.comments&&comInfo.comments.length>0">
       <div v-show="this.$store.state.offset === 0 && $store.state.wonderCom.length>0">
         <tit title="精彩评论" :isShow="isShow"></tit>
         <ul>

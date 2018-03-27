@@ -2,14 +2,17 @@
 
 >vue project
 
+# 接口文档
+https://github.com/Binaryify/NeteaseCloudMusicApi
 ## Build Setup
 
 ``` bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:8090
 npm run dev
+
 
 # build for production with minification
 npm run build

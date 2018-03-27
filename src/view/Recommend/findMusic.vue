@@ -7,7 +7,9 @@
           </li>
         </ul>
       </div>
-      <router-view></router-view>
+      <transition name="fade">
+        <router-view></router-view>
+      </transition>
     </div>
 </template>
 <script>
@@ -22,13 +24,13 @@ export default {
         {path: '/find/singer', name: '歌手', id: 5},
         {path: '/find/newMusic', name: '最新音乐', id: 6}
       ],
-      actIndex: 0
+      actIndex: 0,
+      transitionName: ''
     }
   },
   components: {
   },
   created () {
-    // this.$router.push({path: '/find/personRecomment'})
   },
   methods: {
     cutTab (i, index) {
@@ -39,6 +41,12 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-active {
+    opacity: 0
+  }
   .find {
     width: 820px;
     padding: 15px 30px 30px 30px;
