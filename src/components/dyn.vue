@@ -150,11 +150,11 @@ export default {
       this.$router.push({path: '/userIndex/userInfo', query: {userId: id}})
     },
     moreDyn (e) {
-      let dyn = document.getElementById('dyn')
-      console.log(dyn.scrollHeight)
-      console.log(dyn.clientHeight)
-      var oTop = document.body.scrollTop === 0 ? document.documentElement.scrollTop : document.body.scrollTop
-      console.log(oTop)
+      // let dyn = document.getElementById('dyn')
+      // console.log(dyn.scrollHeight)
+      // console.log(dyn.clientHeight)
+      // var oTop = document.body.scrollTop === 0 ? document.documentElement.scrollTop : document.body.scrollTop
+      // console.log(oTop)
     }
   }
 }

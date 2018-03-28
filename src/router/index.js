@@ -44,6 +44,14 @@ export default new Router({
   routes: [
     {
       path: '/',
+      redirect: '/find/personRecommend'
+    },
+    {
+      path: '*',
+      redirect: '/find/personRecommend'
+    },
+    {
+      path: '/index',
       name: 'index',
       component: index,
       children: [
