@@ -79,7 +79,6 @@ export default {
           sessionStorage.user = JSON.stringify(res)
           sessionStorage.myId = res.profile.userId
           sessionStorage.myName = res.profile.nickname
-          this.$store.state.userId = res.profile.userId
         }
       })
     }

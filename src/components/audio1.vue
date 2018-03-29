@@ -120,7 +120,7 @@ export default {
     },
     same (e) {
       let oDiv1W = this.oDiv1.offsetWidth
-      let x = e.clientX - 290
+      let x = e.clientX - 250
       if (x >= oDiv1W) {
         x = oDiv1W
       } else if (x <= 0) {

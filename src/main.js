@@ -8,6 +8,7 @@ import store from './store/store'
 import './components'
 import util from './public/util'
 import * as custom from './public/filter'
+import '@/styles/index.scss' // global css
 
 Vue.use(util)
 Object.keys(custom).forEach(key => {

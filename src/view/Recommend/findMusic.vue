@@ -7,7 +7,7 @@
           </li>
         </ul>
       </div>
-      <transition name="fade">
+      <transition name="breadcrumb">
         <router-view></router-view>
       </transition>
     </div>
@@ -41,12 +41,6 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s
-  }
-  .fade-enter, .fade-leave-active {
-    opacity: 0
-  }
   .find {
     width: 820px;
     padding: 15px 30px 30px 30px;

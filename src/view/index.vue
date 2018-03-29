@@ -6,10 +6,16 @@
         我是LOGO
       </div>
       <div class="h2">
+        <b>
+          <span class="iconfont icon-arrowleft" @click="back"></span>
+          <span class="iconfont icon-arrowright" @click="go"></span>
+        </b>
         我是搜索框
       </div>
       <div class="h3">
-        <img :src="myId?'http://ox36g1rgh.bkt.clouddn.com/ava.jpg':''" alt="">
+        <!--<img :src="myId?'http://ox36g1rgh.bkt.clouddn.com/ava.jpg':''" alt="">-->
+        <img src='http://ox36g1rgh.bkt.clouddn.com/ava.jpg' v-if="myId">
+        <b class="iconfont icon-weidenglu-touxiang" v-else></b>
         <span @click="log">
           <em>{{myName?myName:'未登录'}}</em><i class="iconfont icon-xiala"></i>
         </span>
@@ -36,8 +42,6 @@ export default {
       imgList: []
     }
   },
-  watch: {
-  },
   components: {
     login,
     over,
@@ -55,6 +59,12 @@ export default {
   methods: {
     log () {
       this.$refs.log.showLog()
+    },
+    go () {
+      window.history.go(1)
+    },
+    back () {
+      window.history.go(-1)
     }
   }
 }
@@ -81,6 +91,31 @@ export default {
       }
       .h2 {
         width: 475px;
+        display: flex;
+        align-items: center;
+        b {
+          width: 52px;
+          border: 1px solid #A82828;
+          display: flex;
+          span {
+            flex: 1;
+            font-size: 12px;
+            text-align: center;
+            cursor: pointer;
+            &:first-child {
+              position: relative;
+              &:after {
+                position: absolute;
+                content: '';
+                right: 0;
+                top: 0;
+                height: 17px;
+                width: 1px;
+                background: #A82828;
+              }
+            }
+          }
+        }
       }
       .h3 {
         flex: 1;
@@ -93,6 +128,9 @@ export default {
           border-radius: 50%;
           cursor: pointer;
           border: 1px solid transparent;
+        }
+        b {
+          font-size: 20px;
         }
         span {
           margin: 0 5px;
