@@ -79,6 +79,7 @@ export default {
           sessionStorage.user = JSON.stringify(res)
           sessionStorage.myId = res.profile.userId
           sessionStorage.myName = res.profile.nickname
+          window.location.reload()
         }
       })
     }
