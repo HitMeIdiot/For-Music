@@ -22,7 +22,9 @@
       </div>
     </header>
     <login ref="log"></login>
-    <router-view></router-view>
+    <transition name="fold">
+      <router-view></router-view>
+    </transition>
     <footer v-if="$route.path!=='/mvPlay'">
       <audioPlay></audioPlay>
     </footer>

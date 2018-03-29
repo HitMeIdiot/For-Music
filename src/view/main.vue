@@ -30,7 +30,7 @@
             </ul>
             <p class="title" @click="creates">
               <b>收藏的歌单</b>
-              <span :class="[show?'icon-arrowdown':'icon-arrowright', 'iconfont']"></span>
+              <span :class="[shows?'icon-arrowdown':'icon-arrowright', 'iconfont']"></span>
             </p>
             <ul v-show="shows">
               <li v-for="(i, index) in otherCreate" :key="index" @click="goSongSheet(i.id)">
@@ -69,9 +69,6 @@
         </transition>
       </div>
     </div>
-    <!--<footer>-->
-      <!--<audioPlay></audioPlay>-->
-    <!--</footer>-->
   </div>
 </template>
 

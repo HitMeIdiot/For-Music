@@ -38,12 +38,11 @@ export default {
     }
     .to_con {
       position: absolute;
-      top: 50%;
+      top: 40%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-40%, -50%);
       p {
-        padding: 5px 25px;
+        padding: 20px 80px;
         background: #333333;
         color: #fff;
         border-radius: 5px;
