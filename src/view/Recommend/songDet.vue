@@ -100,6 +100,7 @@
 import { playlistDetail, commentPlaylist } from '@/api/api'
 import comment from '@/components/comment'
 import paging from '@/components/paging'
+// import Bus from '@/components/bus'
 export default {
   data () {
     return {
@@ -137,6 +138,7 @@ export default {
   created () {
     this.id = this.$route.query.songSheetId
     this.getSheetDet(this.id)
+    // Bus.$on('mus', this.playMus)
   },
   methods: {
     goSingerInfo (id) {
@@ -145,6 +147,7 @@ export default {
     // 双击播放歌曲
     playSong (i, index) {
       console.log(i)
+      this.$store.state.curSongIndex = index
       this.$store.state.album = i.album.name
       this.$store.state.duration = i.duration
       this.$store.state.albumId = i.album.id
@@ -164,6 +167,7 @@ export default {
           })
           arr = res.result.tracks
           this.tracks = arr
+          this.$store.state.tracks = arr
         }
       })
     },

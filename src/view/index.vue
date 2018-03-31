@@ -20,6 +20,7 @@
           <em>{{myName?myName:'未登录'}}</em><i class="iconfont icon-xiala"></i>
         </span>
         <div class="drop" v-show="showDrop">
+          <span class="dropIcon"></span>
           <ul>
             <li>
               <img src='http://ox36g1rgh.bkt.clouddn.com/ava.jpg'>
@@ -28,7 +29,7 @@
             </li>
             <li></li>
             <li @click="loginOut">
-              <span class="iconfont icon-weidenglu-touxiang"></span>
+              <span class="iconfont icon-guanbi"></span>
               退出登录
             </li>
           </ul>
@@ -36,9 +37,7 @@
       </div>
     </header>
     <login ref="log"></login>
-    <transition name="fold">
-      <router-view></router-view>
-    </transition>
+    <router-view></router-view>
     <footer v-if="$route.path!=='/mvPlay'">
       <audioPlay></audioPlay>
     </footer>
@@ -58,7 +57,8 @@ export default {
       actImg: 0,
       imgList: [],
       showDrop: false,
-      isSign: false
+      isSign: false,
+      myName: ''
     }
   },
   components: {
@@ -67,9 +67,11 @@ export default {
     audioPlay
   },
   created () {
-    this.myId = sessionStorage.myId
-    this.myName = sessionStorage.myName
-    this.isSign = JSON.parse(sessionStorage.user).pcSign
+    if (sessionStorage.myId) {
+      this.myId = sessionStorage.myId
+      this.myName = sessionStorage.myName
+      this.isSign = JSON.parse(sessionStorage.user).pcSign
+    }
     Bus.$on('getImg', (target, actImg) => {
       this.imgList = target
       this.actImg = actImg
@@ -100,6 +102,7 @@ export default {
         dailySignIn({params: {type: 1}}).then(res => {
           console.log('签到', res)
           if (res.code === 200) {
+            JSON.parse(sessionStorage.user).pcSign = true
             this.isSign = true
           } else {
             this.$toast(res.msg)
@@ -115,7 +118,6 @@ export default {
     position: relative;
     width: 1020px;
     max-width: 1020px;
-    margin: 0 auto;
     box-shadow: 0 0 8px 6px #E1E1E2;
     header {
       padding: 0 15px;
@@ -193,6 +195,16 @@ export default {
           box-shadow: 0 0 3px 1px #E1E1E2;
           border-radius: 3px;
           padding-top: 20px;
+          .dropIcon {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: -10px;
+            left: 127.5px;
+            background: #fff;
+            margin: 0;
+            transform: rotate(45deg);
+          }
           ul {
             color: #666;
             font-size: 14px;
@@ -217,6 +229,9 @@ export default {
                   border-radius: 3px;
                   font-size: 12px;
                 }
+              }
+              .iconfont {
+                font-size: 20px;
               }
               &:nth-child(2) {
                 height: 255px;

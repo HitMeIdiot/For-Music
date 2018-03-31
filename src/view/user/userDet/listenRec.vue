@@ -68,10 +68,14 @@ export default {
         if (res.code === 200) {
           if (this.type === 0) {
             this.listenList = res.allData
-            this.playCount = res.allData[0].playCount
+            if (res.allData.length > 0) {
+              this.playCount = res.allData[0].playCount
+            }
           } else {
             this.listenList = res.weekData
-            this.playCount = res.weekData[0].playCount
+            if (res.weekData.length > 0) {
+              this.playCount = res.weekData[0].playCount
+            }
           }
         }
       })

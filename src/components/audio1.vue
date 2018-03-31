@@ -1,15 +1,16 @@
 <template>
     <div class="audio">
       <div class="con">
-        <span class="iconfont icon-last"></span>
+        <span class="iconfont icon-last" @click="last"></span>
         <span class="iconfont icon-zanting" @click="stop" v-if="isPlay"></span>
         <span class="iconfont icon-play" @click="play" v-else ></span>
-        <span class="iconfont icon-next"></span>
+        <!--<span class="iconfont icon-next" @click="add"></span>-->
+        <span class="iconfont icon-next" @click="next"></span>
       </div>
       <div class="pro">
         <span>{{currentTime | timeFormat}}</span>
         <p id="pro" @click="jumpTime($event)"  >
-          <i></i>
+          <i id="line"></i>
           <em id="ems"></em>
           <b id="steps"></b>
         </p>
@@ -31,6 +32,7 @@
 </template>
 <script>
 import Bus from './bus.js'
+import {mapActions} from 'vuex'
 export default {
   data () {
     return {
@@ -48,12 +50,16 @@ export default {
       audio: '',
       oDiv1: '',
       oDiv2: '',
-      oDiv3: ''
+      oDiv3: '',
+      proWidth: 0
     }
   },
   computed: {
     getPlayState () {
       return this.$store.state.mp3Url
+    },
+    getNewId () {
+      return this.$route.query.songSheetId
     }
   },
   watch: {
@@ -63,6 +69,9 @@ export default {
       this.audio.load()
       this.isPlay = true
       this.play()
+    },
+    getNewId () {
+      this.$store.state.curSongIndex = 0
     }
   },
   components: {},
@@ -73,6 +82,7 @@ export default {
     this.oDiv1 = document.querySelector('#pro')
     this.oDiv2 = document.querySelector('#ems')
     this.oDiv3 = document.querySelector('#steps')
+    this.proWidth = document.querySelector('#line').offsetWidth
     this.oDiv3.addEventListener('mousedown', (ev) => {
       document.addEventListener('mousemove', this.fnMove, false)
       document.addEventListener('mouseup', this.fnEnd, false)
@@ -81,18 +91,21 @@ export default {
     this.fnEnd()
   },
   methods: {
+    ...mapActions({
+      add: 'increment'
+    }),
     updateLyric () {
       let t = this.audio.currentTime
       if (this.$route.path === '/musicPlay') {
         Bus.$emit('getTarget', t)
       }
       this.currentTime = this.audio.currentTime * 1000
-      if (this.step <= 445) {
-        this.step = this.currentTime / this.$store.state.duration * 445
+      if (this.step <= this.proWidth) {
+        this.step = this.currentTime / this.$store.state.duration * this.proWidth
         this.oDiv3.style.left = this.step + 'px'
         this.oDiv2.style.width = this.step + 'px'
       }
-      if (this.step >= 445) {
+      if (this.step >= this.proWidth) {
         this.isPlay = false
         this.step = 0
         this.oDiv3.style.left = 0
@@ -120,7 +133,7 @@ export default {
     },
     same (e) {
       let oDiv1W = this.oDiv1.offsetWidth
-      let x = e.clientX - 290
+      let x = e.clientX - 250
       if (x >= oDiv1W) {
         x = oDiv1W
       } else if (x <= 0) {
@@ -129,7 +142,7 @@ export default {
       this.oDiv3.style.left = x + 'px'
       this.oDiv2.style.width = x + 'px'
       // 点击或移动时根据step计算time赋值给this.audio.currentTime
-      this.step = x / 445 * 100
+      this.step = x / this.proWidth * 100
       this.time = this.step * this.$store.state.duration / 1000 / 100
       this.audio.currentTime = this.time
     },
@@ -156,6 +169,31 @@ export default {
         this.audio.volume = this.volume / 100
         this.vos = this.volume
         this.vo = this.volume - 7
+      }
+    },
+    next () {
+      this.$store.state.curSongIndex++
+      this.playMus(this.$store.state.curSongIndex)
+      // Bus.$emit('mus', this.$store.state.curSongIndex)
+    },
+    last () {
+      if (this.$store.state.curSongIndex > 0) {
+        this.$store.state.curSongIndex--
+        this.playMus(this.$store.state.curSongIndex)
+        // Bus.$emit('mus', this.$store.state.curSongIndex)
+      }
+    },
+    increment () {
+      this.$store.dispatch('increment')
+    },
+    playMus (index) {
+      if (index <= this.$store.state.tracks.length - 1) {
+        let i = this.$store.state.tracks[index]
+        this.$store.state.curSongIndex = index
+        this.$store.state.album = i.album.name
+        this.$store.state.duration = i.duration
+        this.$store.state.albumId = i.album.id
+        this.playMusic(i.id, i.name, i.album.blurPicUrl, i.album.artists)
       }
     }
   }

@@ -19,6 +19,9 @@ export default new vuex.Store({
     lyric: '',
     duration: 0,
     timer: '',
+    // 上一曲，下一曲，当前歌曲在歌单的下表
+    curSongIndex: 0,
+    tracks: [],
     // 歌单标签
     songTag: '全部歌单',
     // 精彩评论
@@ -42,13 +45,20 @@ export default new vuex.Store({
     userId: ''
   },
   mutations: {
-    test () {
-
+    INCREMENT (state) {
+      state.curSongIndex++
+      console.log(state.curSongIndex)
+    },
+    DECREMENT (state) {
+      state.curSongIndex--
     }
   },
   actions: {
-    mes () {
-      alert(1)
+    increment ({commit}) {
+      commit('INCREMENT')
+    },
+    decrement ({commit}) {
+      commit('DECREMENT')
     }
   }
 })
