@@ -183,9 +183,6 @@ export default {
         // Bus.$emit('mus', this.$store.state.curSongIndex)
       }
     },
-    increment () {
-      this.$store.dispatch('increment')
-    },
     playMus (index) {
       if (index <= this.$store.state.tracks.length - 1) {
         let i = this.$store.state.tracks[index]
