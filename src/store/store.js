@@ -44,21 +44,29 @@ export default new vuex.Store({
     isCover: false,
     userId: ''
   },
+  getters: {
+    curSongIndex: state => state.curSongIndex,
+    album: state => state.album,
+    duration: state => state.duration,
+    albumId: state => state.albumId,
+    tracks: state => state.tracks
+  },
   mutations: {
     INCREMENT (state) {
-      state.curSongIndex++
-      console.log(state.curSongIndex)
+      if (state.curSongIndex === state.tracks.length - 1) {
+        state.curSongIndex = 0
+      } else {
+        state.curSongIndex++
+      }
     },
     DECREMENT (state) {
-      state.curSongIndex--
+      if (state.curSongIndex > 0 && state.curSongIndex < state.tracks.length) {
+        state.curSongIndex--
+      } else if (this.$store.state.curSongIndex === 0) {
+        state.curSongIndex = state.tracks.length - 1
+      }
     }
   },
   actions: {
-    increment ({commit}) {
-      commit('INCREMENT')
-    },
-    decrement ({commit}) {
-      commit('DECREMENT')
-    }
   }
 })

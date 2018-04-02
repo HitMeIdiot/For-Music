@@ -32,7 +32,7 @@
 </template>
 <script>
 import Bus from './bus.js'
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 export default {
   data () {
     return {
@@ -60,7 +60,10 @@ export default {
     },
     getNewId () {
       return this.$route.query.songSheetId
-    }
+    },
+    ...mapGetters([
+      'curSongIndex'
+    ])
   },
   watch: {
     getPlayState (val) {
@@ -96,16 +99,17 @@ export default {
     }),
     updateLyric () {
       let t = this.audio.currentTime
+      let d = this.$store.state.duration
       if (this.$route.path === '/musicPlay') {
         Bus.$emit('getTarget', t)
       }
       this.currentTime = this.audio.currentTime * 1000
-      if (this.step <= this.proWidth) {
-        this.step = this.currentTime / this.$store.state.duration * this.proWidth
+      if (t <= d / 1000) {
+        this.step = this.currentTime / d * this.proWidth
         this.oDiv3.style.left = this.step + 'px'
         this.oDiv2.style.width = this.step + 'px'
       }
-      if (this.step >= this.proWidth) {
+      if (t >= d / 1000) {
         this.isPlay = false
         this.step = 0
         this.oDiv3.style.left = 0
@@ -172,21 +176,26 @@ export default {
       }
     },
     next () {
-      this.$store.state.curSongIndex++
+      if (this.$store.state.curSongIndex === this.$store.state.tracks.length - 1) {
+        this.$store.state.curSongIndex = 0
+      } else {
+        this.$store.state.curSongIndex++
+      }
       this.playMus(this.$store.state.curSongIndex)
       // Bus.$emit('mus', this.$store.state.curSongIndex)
     },
     last () {
-      if (this.$store.state.curSongIndex > 0) {
+      if (this.$store.state.curSongIndex > 0 && this.$store.state.curSongIndex < this.$store.state.tracks.length) {
         this.$store.state.curSongIndex--
-        this.playMus(this.$store.state.curSongIndex)
         // Bus.$emit('mus', this.$store.state.curSongIndex)
+      } else if (this.$store.state.curSongIndex === 0) {
+        this.$store.state.curSongIndex = this.$store.state.tracks.length - 1
       }
+      this.playMus(this.$store.state.curSongIndex)
     },
     playMus (index) {
-      if (index <= this.$store.state.tracks.length - 1) {
+      if (index <= this.$store.state.tracks.length) {
         let i = this.$store.state.tracks[index]
-        this.$store.state.curSongIndex = index
         this.$store.state.album = i.album.name
         this.$store.state.duration = i.duration
         this.$store.state.albumId = i.album.id

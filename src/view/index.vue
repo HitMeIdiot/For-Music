@@ -45,7 +45,7 @@
 </template>
 <script>
 import login from '@/components/login'
-import audioPlay from '@/components/audio1'
+import audioPlay from '@/components/audio'
 import over from '@/components/over'
 import Bus from '@/components/bus'
 import {dailySignIn} from '@/api/api'
