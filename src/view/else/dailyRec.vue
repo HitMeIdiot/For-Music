@@ -56,6 +56,7 @@ export default {
         console.log('每日推荐歌曲', res)
         if (res.code === 200) {
           this.daySongs = res.recommend
+          this.$store.state.tracks = res.recommend
         }
       })
     }

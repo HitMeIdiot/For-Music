@@ -21,7 +21,7 @@
             <i>{{turnTime(sheetDet.createTime, 'type')}} 创建</i>
           </div>
           <div class="m3">
-            <p><em class="iconfont icon-bo"></em>播放全部 <b class="iconfont icon-add"></b></p>
+            <p @click="plays"><em class="iconfont icon-bo"></em>播放全部 <b class="iconfont icon-add"></b></p>
             <p><em class="iconfont icon-bo"></em>收藏({{sheetDet.subscribedCount}})</p>
             <p><em class="iconfont icon-bo"></em>分享({{sheetDet.shareCount}})</p>
             <p><em class="iconfont icon-download"></em>下载全部</p>
@@ -147,10 +147,8 @@ export default {
     // 双击播放歌曲
     playSong (i, index) {
       console.log(i)
-      this.$store.state.curSongIndex = index
-      this.$store.state.album = i.album.name
-      this.$store.state.duration = i.duration
-      this.$store.state.albumId = i.album.id
+      this.$store.commit('SET_INDEX', index)
+      this.$store.commit('AD', i)
       this.playMusic(i.id, i.name, i.album.blurPicUrl, i.album.artists)
     },
     // 歌单详情
@@ -203,6 +201,9 @@ export default {
     },
     goUser (id) {
       this.$router.push({path: '/userIndex/userInfo', query: {userId: id}})
+    },
+    plays () {
+      this.playAll()
     }
   }
 }

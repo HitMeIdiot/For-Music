@@ -42,29 +42,40 @@ export default new vuex.Store({
     upCss: 'icon-caidan1',
     downCss: 'icon-caidan1',
     isCover: false,
-    userId: ''
-  },
-  getters: {
-    curSongIndex: state => state.curSongIndex,
-    album: state => state.album,
-    duration: state => state.duration,
-    albumId: state => state.albumId,
-    tracks: state => state.tracks
+    userId: '',
+    adobe: {
+      mp3Url: '',
+      playSongId: '',
+      songName: '',
+      songImg: '',
+      albumId: '',
+      album: '',
+      duration: '',
+      songSinger: ''
+    }
   },
   mutations: {
     INCREMENT (state) {
-      if (state.curSongIndex === state.tracks.length - 1) {
-        state.curSongIndex = 0
-      } else {
+      if (state.curSongIndex < state.tracks.length - 1) {
         state.curSongIndex++
+      } else {
+        state.curSongIndex = 0
       }
     },
     DECREMENT (state) {
       if (state.curSongIndex > 0 && state.curSongIndex < state.tracks.length) {
         state.curSongIndex--
-      } else if (this.$store.state.curSongIndex === 0) {
+      } else if (state.curSongIndex === 0) {
         state.curSongIndex = state.tracks.length - 1
       }
+    },
+    AD (state, i) {
+      state.album = i.album.name
+      state.duration = i.duration
+      state.albumId = i.album.id
+    },
+    SET_INDEX (state, index) {
+      state.curSongIndex = index
     }
   },
   actions: {

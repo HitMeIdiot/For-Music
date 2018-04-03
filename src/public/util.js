@@ -5,13 +5,13 @@ export default{
     Vue.prototype.playMusic = function (id, name, img, singer) {
       this.$store.state.songName = name
       this.$store.state.playSongId = id
+      this.$store.state.songImg = img
+      this.$store.state.songSinger = singer
       musicUrl({params: {id: id}}).then((res) => {
         console.log('歌曲url', res)
         if (res.code === 200) {
           if (res.data[0].url) {
             this.$store.state.mp3Url = res.data[0].url
-            this.$store.state.songImg = img
-            this.$store.state.songSinger = singer
           } else {
             this.$toast('暂无资源')
           }
@@ -81,6 +81,14 @@ export default{
           alert('成功')
         }
       })
+    }
+    Vue.prototype.playAll = function () {
+      this.$store.state.curSongIndex = 0
+      if (this.$store.state.curSongIndex <= this.$store.state.tracks.length) {
+        let i = this.$store.state.tracks[this.$store.state.curSongIndex]
+        this.$store.commit('AD', i)
+        this.playMusic(i.id, i.name, i.album.blurPicUrl, i.album.artists)
+      }
     }
   }
 }

@@ -2,7 +2,7 @@
   <ul>
     <li>
       <span>
-        <em>
+        <em @click="plays">
           <i class="iconfont icon-bo"></i>
           播放全部
           <i class="iconfont icon-add"></i>
@@ -17,7 +17,8 @@
     </li>
     <li v-for="(i,index) in list" :key="index" @dblclick="playSong(i,index)">
       <p>
-        <span>{{index}}</span>
+        <span class="iconfont icon-shengyin" style="color: red" v-if="playSongId===i.id"></span>
+        <span v-else><i v-show="index<9">0</i><b>{{index+1}}</b></span>
         <span class="iconfont icon-love"></span>
         <span class="iconfont icon-download"></span>
       </p>
@@ -33,6 +34,7 @@
   </ul>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
   data () {
     return {}
@@ -43,15 +45,22 @@ export default {
     }
   },
   components: {},
+  computed: {
+    ...mapState([
+      'playSongId'
+    ])
+  },
   created () {
   },
   methods: {
     // 双击播放歌曲
     playSong (i, index) {
-      this.$store.state.album = i.album.name
-      this.$store.state.duration = i.duration
-      this.$store.state.albumId = i.album.id
+      this.$store.commit('SET_INDEX', index)
+      this.$store.commit('AD', i)
       this.playMusic(i.id, i.name, i.album.blurPicUrl, i.album.artists)
+    },
+    plays () {
+      this.playAll()
     }
   }
 }

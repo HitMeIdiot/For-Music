@@ -1,10 +1,18 @@
 <template>
   <div class="audio">
     <div class="con">
-      <span class="iconfont icon-last" @click="last"></span>
-      <span class="iconfont icon-zanting" @click="stop" v-if="isPlay"></span>
-      <span class="iconfont icon-play" @click="play" v-else ></span>
-      <span class="iconfont icon-next" @click="add"></span>
+      <span>
+        <i class="iconfont icon-last" @click="last"></i>
+      </span>
+      <span v-if="isPlay">
+        <i class="iconfont icon-zanting" @click="stop" ></i>
+      </span>
+      <span v-else >
+        <i class="iconfont icon-play" @click="play" ></i>
+      </span>
+      <span>
+        <i class="iconfont icon-next" @click="add"></i>
+      </span>
       <!--<span class="iconfont icon-next" @click="next"></span>-->
     </div>
     <div class="pro">
@@ -14,7 +22,7 @@
         <em id="ems"></em>
         <b id="steps"></b>
       </p>
-      <span>{{$store.state.duration | timeFormat}}</span>
+      <span>{{duration | timeFormat}}</span>
     </div>
     <div class="voice pro">
       <span :class="[!isQuiet?'icon-shengyin':'icon-wusheng', 'iconfont']" @click="mute"></span>
@@ -31,7 +39,7 @@
   </div>
 </template>
 <script>import Bus from './bus.js'
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 export default {
   data () {
     return {
@@ -60,13 +68,19 @@ export default {
     getNewId () {
       return this.$route.query.songSheetId
     },
-    ...mapGetters([
+    // 使用mapGetters后，里面的属性赋值时需要使用set，不然会报错
+    // Computed property "xxx" was assigned to but it has no setter.如下面album的写法
+    ...mapState([
       'curSongIndex',
-      'album',
       'duration',
-      'albumId',
       'tracks'
-    ])
+    ]),
+    album: {
+      get () {
+        return this.$store.state.album
+      },
+      set () {}
+    }
   },
   watch: {
     getPlayState (val) {
@@ -101,7 +115,7 @@ export default {
     }),
     updateLyric () {
       let t = this.audio.currentTime
-      let d = this.$store.state.duration
+      let d = this.duration
       if (this.$route.path === '/musicPlay') {
         Bus.$emit('getTarget', t)
       }
@@ -117,15 +131,18 @@ export default {
         this.oDiv3.style.left = 0
         this.oDiv2.style.width = 0
         this.currentTime = 0
+        this.add()
       }
     },
     play () {
       this.isPlay = true
-      this.audio.play()
+      if (this.getPlayState) {
+        this.audio.play()
+      }
     },
     stop () {
-      this.audio.pause()
       this.isPlay = false
+      this.audio.pause()
     },
     fnMove (e) {
       this.same(e)
@@ -149,7 +166,7 @@ export default {
       this.oDiv2.style.width = x + 'px'
       // 点击或移动时根据step计算time赋值给this.audio.currentTime
       this.step = x / this.proWidth * 100
-      this.time = this.step * this.$store.state.duration / 1000 / 100
+      this.time = this.step * this.duration / 1000 / 100
       this.audio.currentTime = this.time
     },
     // 调声音大小
@@ -188,9 +205,7 @@ export default {
     playMus (index) {
       if (index <= this.tracks.length) {
         let i = this.tracks[index]
-        this.$store.state.album = i.album.name
-        this.$store.state.duration = i.duration
-        this.$store.state.albumId = i.album.id
+        this.$store.commit('AD', i)
         this.playMusic(i.id, i.name, i.album.blurPicUrl, i.album.artists)
       }
     }
@@ -203,7 +218,7 @@ export default {
     align-items: center;
     .con {
       width: 200px;
-      padding: 0 25px;
+      padding: 0 20px;
       flex-shrink: 0;
       display: flex;
       justify-content: center;
@@ -214,9 +229,15 @@ export default {
         font-size: 30px;
         color: #c62f2f;
         cursor: pointer;
-      }
-      span:nth-of-type(2) {
-        font-size: 35px;
+        line-height: unset;
+        i {
+          font-size: 35px;
+        }
+        &:nth-of-type(2) {
+          i {
+            font-size: 40px;
+          }
+        }
       }
     }
     .pro {
