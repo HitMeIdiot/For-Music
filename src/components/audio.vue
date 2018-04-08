@@ -125,7 +125,7 @@ export default {
         this.oDiv3.style.left = this.step + 'px'
         this.oDiv2.style.width = this.step + 'px'
       }
-      if (t >= d / 1000) {
+      if (t >= (d - 200) / 1000) {
         this.isPlay = false
         this.step = 0
         this.oDiv3.style.left = 0
@@ -216,6 +216,7 @@ export default {
   .audio {
     display: flex;
     align-items: center;
+    line-height: 0;
     .con {
       width: 200px;
       padding: 0 20px;
