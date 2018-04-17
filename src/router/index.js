@@ -47,10 +47,6 @@ export default new Router({
       redirect: '/find/personRecommend'
     },
     {
-      path: '*',
-      redirect: '/find/personRecommend'
-    },
-    {
       path: '/index',
       name: 'index',
       component: index,
