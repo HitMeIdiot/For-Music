@@ -119,6 +119,7 @@ export default {
     width: 1020px;
     max-width: 1020px;
     box-shadow: 0 0 8px 6px #E1E1E2;
+    margin: 0 auto;
     header {
       padding: 0 15px;
       height: 50px;
