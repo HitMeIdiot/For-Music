@@ -7,7 +7,7 @@ https://github.com/Binaryify/NeteaseCloudMusicApi
 ## Build Setup
 配合NeteaseCloudMusicApi，运行项目localhost:3000;
 运行本地项目，localhost:8090
-设置反向代理为http://localhost:3000/即可看到下图效果
+设置反向代理为 http://localhost:3000/即可看到下图效果
 
 ``` bash
 # install dependencies
