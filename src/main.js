@@ -9,7 +9,7 @@ import './components'
 import util from './public/util'
 import * as custom from './public/filter'
 import '@/styles/index.scss' // global css
-
+console.log(测试);
 Vue.use(util)
 Object.keys(custom).forEach(key => {
   Vue.filter(key, custom[key])
